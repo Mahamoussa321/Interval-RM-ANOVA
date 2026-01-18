@@ -1,18 +1,44 @@
-# Repeated-Measures ANOVA with Subject Bootstrap — Interval Data (Publication Project v2)
+# Interval-Valued Repeated-Measures ANOVA with Permutation Inference
 
-This project implements a subject-level (cluster) bootstrap for the *time* effect in repeated-measures ANOVA,
-with simulation for **interval data** under three families: *Gamma*, *Poisson*, *Normal centers + Uniform radii*.
-Scripts are numbered in the order you should run them.
+This repository implements an uncertainty-aware repeated-measures ANOVA
+for interval-valued longitudinal data.
+Each observation is represented by a center and radius, allowing inference
+to jointly capture changes in location and uncertainty over time.
 
-## Order of running (scripts/)
+The proposed method constructs an ANOVA-style sum-of-squares decomposition
+based on a weighted quadratic distance and performs inference using a
+within-subject permutation test that is finite-sample exact under the
+repeated-measures null hypothesis.
 
-1. `01_simulate_null_cutoff_per_family.R` — compute a 95% null cutoff for each family (Gamma/Poisson/Normal+Uniform).
-2. `02_power_curve_per_family.R` — compute power curves per family (writes CSV + figures).
-3. `03_three_families_example_analysis.R` — run one analysis per family with bootstrap p-values.
-4. `04_sensitivity_wild_cluster.R` — optional: wild cluster bootstrap on one design (supplement).
-5. `05_render_manuscript.R` — render the Quarto paper (PDF/HTML) using the results from steps 1–3.
+The code accompanying this repository reproduces the simulation results
+and figures reported in the associated manuscript.
 
-## Quick start
-- Run `install.R` to install required packages.
-- Then run scripts in the order above.
-- Figures go to `figures/`, results to `output/`, manuscript in `manuscript/`.
+---
+
+## Repository structure
+
+nterval-RM-ANOVA/
+├── R/ # Core functions (simulation, test statistic, permutation)
+│ ├── sim_data_rm_interval_updated.R
+│ ├── observe_F_rm_dw.R
+│ ├── perm_within_subject_cr.R
+│ ├── estimate_power_cr_parallel.R
+│ ├── estimate_power_tau_grid.R
+│ ├── make_sigma.R
+│ └── utils.R
+├── scripts/
+│ └── run_power_study_updated.R # Main script to reproduce simulations + figures
+├── figures/
+│ └── poisson/ # Example output figures (PNG)
+├── README.md
+└── Dependent_ANOVA.Rproj
+
+
+---
+
+## Main script
+
+To reproduce the simulation study and figures, run **one script**:
+
+```r
+scripts/run_power_study_updated.R
