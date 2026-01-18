@@ -1,0 +1,12 @@
+.Rproj.user/
+.Rhistory
+.RData
+*.RData
+
+# Generated outputs (optional)
+output/
+results/
+
+
+# R checkpoints
+*.rds
